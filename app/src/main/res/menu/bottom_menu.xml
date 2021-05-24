@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/popular"
+        android:title="@string/popular"
+        android:icon="@drawable/ic_baseline_whatshot_24"/>
+
+    <item android:id="@+id/rated"
+        android:title="@string/rated"
+        android:icon="@drawable/ic_baseline_check_box_24"/>
+</menu>
