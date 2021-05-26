@@ -1,21 +1,21 @@
-package com.example.movieapp
+package com.example.movieapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.movieapp.fragments.PopularFragment
-import com.example.movieapp.fragments.RatedFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.movieapp.R
+import com.example.movieapp.databinding.ActivityMainBinding
+import com.example.movieapp.ui.popular.PopularFragment
+import com.example.movieapp.ui.rated.RatedFragment
 
 class MainActivity : AppCompatActivity() {
 
-    //TODO Ready to get started with Retrofit library!!!
-
-    lateinit var bottomNav: BottomNavigationView
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (supportActionBar != null) {
             supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -23,11 +23,9 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.setDisplayUseLogoEnabled(true)
         }
 
-        bottomNav = findViewById(R.id.bottomNavigationView)
-
         setFragment(PopularFragment())
 
-        bottomNav.setOnNavigationItemSelectedListener { menuItem ->
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
                 R.id.popular -> setFragment(PopularFragment())
                 R.id.rated -> setFragment(RatedFragment())
@@ -43,5 +41,4 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
-
 }

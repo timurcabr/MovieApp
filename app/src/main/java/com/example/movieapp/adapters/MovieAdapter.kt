@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.Movie
 import com.example.movieapp.data.Utils
+import com.example.movieapp.ui.popular.PopularViewModel
 
-class MovieAdapter(private val context: Context,
+class MovieAdapter(private val viewModel: PopularViewModel,
+                   private val context: Context,
                    private val movieList: MutableList<Movie>,
                    private val listener: OnMovieClickListener)
     : RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
@@ -24,6 +25,10 @@ class MovieAdapter(private val context: Context,
         val movieTitle: TextView = itemView.findViewById(R.id.movieTitle)
         val movieDesc: TextView = itemView.findViewById(R.id.movieDesc)
         val movieRating: RatingBar = itemView.findViewById(R.id.movieRating)
+
+        fun bind(movie: Movie){
+            //TODO ViewModel binding
+        }
 
         init {
             itemView.setOnClickListener(this)
@@ -42,10 +47,9 @@ class MovieAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        holder.movieTitle.text = movieList[position].title
+        holder.movieTitle.text = movieList[position].original_title
         holder.movieDesc.text = movieList[position].overview
-        holder.movieRating.rating = movieList[position].vote_average.toFloat()
-        Glide.with(context).load(Utils.IMAGE_URL+movieList[position].poster_path).into(holder.moviePoster)
+        Glide.with(context).load(R.drawable.poster).into(holder.moviePoster)
     }
 
     override fun getItemCount(): Int {
