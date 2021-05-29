@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.movieapp.data.Movie
 
 interface Repo {
-    fun getMovieList() : MutableList<Movie>
+    fun getPopularMovieList() : MutableList<Movie>
+    fun getRatedMovieList() : MutableList<Movie>
+
     //TODO Only now it is String, then will be Movie object
     fun getSpecificMovie() : String
 }
