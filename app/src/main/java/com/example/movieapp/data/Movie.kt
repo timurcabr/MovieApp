@@ -9,4 +9,8 @@ data class Movie(val backdrop_path: String,
                  val poster_path: String,
                  val release_date: String,
                  val title: String,
-                 val vote_average: Double)
+                 val vote_average: Double){
+
+    constructor(original_title: String, overview: String) : this("", 0, "", original_title, overview, 0.0, "", "", "", 0.0)
+
+}
