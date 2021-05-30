@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId){
-                R.id.popular -> setFragment(PopularFragment())
-                R.id.rated -> setFragment(RatedFragment())
+                R.id.movies -> setFragment(PopularFragment())
+                R.id.favorite -> setFragment(RatedFragment())
             }
             true
         }
