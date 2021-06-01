@@ -1,6 +1,5 @@
 package com.example.movieapp.ui.popular
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,7 +17,7 @@ import com.example.movieapp.databinding.FragmentPopularBinding
 import com.example.movieapp.ui.details.DetailsFragment
 
 class PopularFragment : Fragment(), OnMovieClickListener {
-    private var _binding : FragmentPopularBinding? = null
+    private var _binding: FragmentPopularBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: PopularViewModel
 
@@ -33,37 +32,44 @@ class PopularFragment : Fragment(), OnMovieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(PopularViewModel::class.java)
-        viewModel.getPopularMovieList()
-        viewModel.getRatedMovieList()
+        viewModel.apply {
+            getPopularMovieList()
+            getRatedMovieList()
 
-        viewModel.getPopularList().observe(viewLifecycleOwner, {
-            Log.i("Data", it.toString())
-            configurePopularList(it)
-        })
+            getPopularList().observe(viewLifecycleOwner, {
+                Log.i("Data", it.toString())
+                configurePopularList(it)
+            })
 
-        viewModel.getRatedList().observe(viewLifecycleOwner, {
-            configureRatedList(it)
-        })
-        Toast.makeText(context, "Popular fragment", Toast.LENGTH_SHORT).show()
+            getRatedList().observe(viewLifecycleOwner, {
+                configureRatedList(it)
+            })
+        }
     }
 
-    private fun configurePopularList(movieList: MutableList<Movie>){
-        binding.movieListPopular.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.movieListPopular.setHasFixedSize(true)
-        binding.movieListPopular.adapter = MovieAdapter("Popular", requireContext(), movieList, this)
+    private fun configurePopularList(movieList: MutableList<Movie>) {
+        binding.movieListPopular.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = MovieAdapter("Popular", requireContext(), movieList, this@PopularFragment)
+        }
     }
 
-    private fun configureRatedList(movieList: MutableList<Movie>){
-        binding.movieListRated.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.movieListRated.setHasFixedSize(true)
-        binding.movieListRated.adapter = MovieAdapter("Rated", requireContext(), movieList, this)
+    private fun configureRatedList(movieList: MutableList<Movie>) {
+        binding.movieListRated.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = MovieAdapter("Rated", requireContext(), movieList, this@PopularFragment)
+        }
     }
 
     override fun onItemClick(position: Int) {
-        viewModel.getSpecificItem(position)
-        viewModel.getSpecificString().observe(viewLifecycleOwner, {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        })
+        viewModel.apply {
+            getSpecificItem(position)
+            getSpecificString().observe(viewLifecycleOwner, {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            })
+        }
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, DetailsFragment())
             addToBackStack(null)

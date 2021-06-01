@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.Movie
-import com.example.movieapp.data.Utils
-import com.example.movieapp.ui.popular.PopularViewModel
+import com.example.movieapp.databinding.PosterItemBinding
 
 class MovieAdapter(
     private val category: String,
@@ -20,38 +18,34 @@ class MovieAdapter(
     private val movieList: MutableList<Movie>,
     private val listener: OnMovieClickListener
 ) : RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
-    inner class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
-        val moviePoster: ImageView = itemView.findViewById(R.id.moviePosterItem)
-        val movieTitle: TextView = itemView.findViewById(R.id.movieTitleItem)
-        val movieRelease: TextView = itemView.findViewById(R.id.movieReleaseItem)
-        val movieRating: TextView = itemView.findViewById(R.id.movieRatingItem)
 
+    inner class MovieHolder(val binding: PosterItemBinding) : RecyclerView.ViewHolder(binding.root){
         init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            if (v == itemView) {
+            itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.poster_item, parent, false)
-        return MovieHolder(view)
+        val binding = PosterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        holder.movieTitle.text = movieList[position].original_title
-        holder.movieRelease.text = movieList[position].release_date
-        holder.movieRating.text = movieList[position].vote_average.toString()
-        if (category == "Popular") {
-            Glide.with(context).load(R.drawable.poster).into(holder.moviePoster)
-        }
-        else{
-            Glide.with(context).load(R.drawable.poster_two).into(holder.moviePoster)
+        with(holder) {
+            binding.apply {
+                movieTitleItem.text = movieList[position].original_title
+                movieReleaseItem.text = movieList[position].release_date
+                movieRatingItem.text = movieList[position].vote_average.toString()
+
+                if (category == "Popular") {
+                    Glide.with(context).load(R.drawable.poster).into(moviePosterItem)
+                } else {
+                    Glide.with(context).load(R.drawable.poster_two).into(moviePosterItem)
+                }
+            }
+
         }
     }
 

@@ -36,5 +36,4 @@ class PopularViewModel : ViewModel() {
     fun getSpecificItem(position: Int){
         liveData.value = repository.getSpecificMovie()
     }
-
 }
