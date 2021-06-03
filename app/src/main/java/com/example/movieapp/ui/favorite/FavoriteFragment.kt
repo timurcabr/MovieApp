@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.movieapp.adapters.OnMovieClickListener
+import com.example.movieapp.data.Movie
 import com.example.movieapp.databinding.FragmentFavoriteBinding
 
-class FavoriteFragment : Fragment(), OnMovieClickListener {
+class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: FavoriteViewModel
@@ -32,9 +33,5 @@ class FavoriteFragment : Fragment(), OnMovieClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
     }
 }

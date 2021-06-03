@@ -37,7 +37,6 @@ class PopularFragment : Fragment(), OnMovieClickListener {
             getRatedMovieList()
 
             getPopularList().observe(viewLifecycleOwner, {
-                Log.i("Data", it.toString())
                 configurePopularList(it)
             })
 
@@ -51,7 +50,7 @@ class PopularFragment : Fragment(), OnMovieClickListener {
         binding.movieListPopular.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
-            adapter = MovieAdapter("Popular", requireContext(), movieList, this@PopularFragment)
+            adapter = MovieAdapter(requireContext(), movieList, this@PopularFragment)
         }
     }
 
@@ -59,19 +58,22 @@ class PopularFragment : Fragment(), OnMovieClickListener {
         binding.movieListRated.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
-            adapter = MovieAdapter("Rated", requireContext(), movieList, this@PopularFragment)
+            adapter = MovieAdapter(requireContext(), movieList, this@PopularFragment)
         }
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(movie: Movie) {
         viewModel.apply {
-            getSpecificItem(position)
             getSpecificString().observe(viewLifecycleOwner, {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             })
         }
         parentFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, DetailsFragment())
+            val bundle = Bundle()
+            bundle.putSerializable("movie", movie)
+            val fragment = DetailsFragment()
+            fragment.arguments = bundle
+            replace(R.id.fragment_container, fragment)
             addToBackStack(null)
             commit()
         }
