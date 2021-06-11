@@ -1,5 +1,7 @@
 package com.example.movieapp.data
 
+import java.io.Serializable
+
 data class Movie(val backdrop_path: String,
                  val id: Long,
                  val original_language: String,
@@ -9,7 +11,7 @@ data class Movie(val backdrop_path: String,
                  val poster_path: String,
                  val release_date: String,
                  val title: String,
-                 val vote_average: Double){
+                 val vote_average: Double) : Serializable{
 
     constructor(original_title: String, vote_average: Double, release_date: String) : this("", 0, "", original_title, "", 0.0, "", release_date, "", vote_average)
 
